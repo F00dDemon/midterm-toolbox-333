@@ -168,11 +168,12 @@ public class Toolbox {
     }
     SingleNode current = head;
 
-    while(current.next != null){
-      if(current.next.data > current.data && current.next.next != null){
+    while(current.next != null && current.next.next != null){
+      if(current.next.data > current.next.next.data){
         current.next = current.next.next;
+      }else{
+        current = current.next;
       }
-      current = current.next;
     }
   }
 
