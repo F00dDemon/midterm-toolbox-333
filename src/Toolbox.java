@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.TreeMap;
 
 public class Toolbox {
 
@@ -247,9 +248,26 @@ public class Toolbox {
     if (input == null) {
       throw new IllegalArgumentException("Input string cannot be null.");
     }
-    Stack<Character> parStack = new Stack<>();
-    Map<Character, Character> parMap = new HashMap<>();
-    return false;
+    Stack<Integer> memStack = new Stack<>();
+    char[] charArray = input.toCharArray();
+
+    for(int i = 0; i < charArray.length; i++){
+      switch(charArray[i]){
+        case '(':
+          memStack.push(i);
+          break;
+        case ')':
+          if(memStack.isEmpty()){
+            return false;
+          }
+          memStack.pop();
+          break;
+      }
+    }
+    if(!memStack.empty()){
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -277,6 +295,18 @@ public class Toolbox {
     if (scores == null || scores.isEmpty()) {
       throw new IllegalArgumentException("Scares cannot be null or empty");
     }
-    return null;
+    int score = 0;
+    String student = "";
+    for(String key: scores.keySet()){
+      if(scores.get(key) > score){
+        student = key;
+      }else if(scores.get(key) == score){
+        if(student.charAt(0) > key.charAt(0)){
+          student = key;
+        }
+      }
+      
+    }
+    return student;
   }
 }
